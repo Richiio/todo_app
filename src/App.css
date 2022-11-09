@@ -1,0 +1,363 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --gry-bg: hsl(236, 33%, 92%);
+  --white-color: hsl(0, 0%, 98%);
+  --text-color: hsl(235, 21%, 11%);
+  --max-width: 760px;
+  --item-hover: hsl(236, 33%, 92%);
+  --box-shadow: 10px 23px 36px -11px rgba(147, 148, 165, 0.75);
+  --link-color: rgb(82, 82, 82);
+  --grey: #ccc;
+  --check-bg: linear-gradient(
+    to bottom right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+}
+[data-theme="dark"] {
+  --item-hover: hsl(237, 14%, 26%);
+  --box-shadow: 10px 23px 36px -11px rgba(22, 23, 34, 0.86);
+  --white-color: hsl(235, 24%, 19%);
+  --grey: hsl(235, 14%, 36%);
+  --gry-bg: hsl(235, 21%, 11%);
+  --text-color: hsl(234, 39%, 85%);
+  --link-color: #c7c7c7;
+}
+body {
+  background-color: var(--gry-bg);
+  font-family: "Josefin Sans";
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+.bg-image {
+  height: 40vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  z-index: -1;
+}
+.checkbox {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+}
+.add-todo.reset {
+  position: absolute;
+  bottom: -4rem;
+  left: 0;
+  opacity: 1;
+  background-color: var(--white-color);
+}
+.checkbox > input {
+  height: 20px;
+  width: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 1px solid var(--text-color);
+  border-radius: 50%;
+  outline: none;
+  transition-duration: 0.3s;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.checkbox > input:checked {
+  background: var(--check-bg);
+}
+
+.checkbox > input:checked::before {
+  content: "\2713";
+  display: block;
+  font-weight: bold;
+  font-size: 0.7rem;
+  text-align: center;
+  color: white;
+}
+.add-todo {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.input,
+.add-todo {
+  width: 100%;
+  background-color: var(--white-color);
+  padding: 0 0.5rem;
+  height: 42px;
+  border: none;
+  border-radius: 5px;
+  color: var(--text-color);
+  font-family: "Josefin Sans";
+}
+.input {
+  border: 1px solid var(--item-hover);
+  margin: 0.5rem 0;
+}
+.form-group {
+  margin: 1rem 0;
+}
+.dueTag {
+  padding: 0.3rem;
+  border: 1px solid var(--item-hover);
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+form label {
+  font-weight: 500;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+}
+input:focus {
+  outline: none;
+  border: 1px solid #f77bdc;
+}
+::placeholder {
+  color: var(--text-color);
+}
+main {
+  width: 90vw;
+  max-width: var(--max-width);
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 2rem;
+  color: white;
+}
+.header h1 {
+  letter-spacing: 1rem;
+  font-family: "Josefin Sans";
+}
+.header img {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.todo-wrap {
+  width: 100%;
+  background-color: var(--white-color);
+  box-shadow: var(--box-shadow);
+  margin-top: 3rem;
+  border-radius: 10px;
+}
+.flex {
+  border-radius: 0 0 10px 10px;
+}
+.flex p,
+.flex a {
+  opacity: 0.7;
+}
+hr {
+  height: 1px;
+  background-color: var(--grey);
+  border: none;
+}
+/* todo component */
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  /* flex-wrap: wrap; */
+  position: relative;
+  background-color: var(--white-color);
+}
+.todo-item:hover {
+  background-color: var(--item-hover);
+}
+.todo-item.flex:hover {
+  background-color: var(--white-color);
+}
+.panel {
+  overflow: hidden;
+  height: 0;
+  transition: all 0.6s ease;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.panel.show {
+  height: auto;
+  opacity: 1;
+}
+.category {
+  height: max-content;
+}
+.right {
+  width: 80%;
+}
+.left {
+  width: 17%;
+  justify-content: flex-end;
+}
+.text .check-label {
+  white-space: pre-line;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 90%;
+}
+.accordion-btn {
+  color: var(--text-color);
+  font-weight: 500;
+  width: 100%;
+  background-color: var(--white-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  border-bottom: 1px solid grey;
+  /* border-radius: 5px; */
+  padding: 0.9rem;
+}
+.closeBtn {
+  border: 1px solid var(--item-hover) !important  ;
+  border-radius: 5px;
+  padding: 0.5rem !important;
+}
+/* .todo-item:hover .closeBtn {
+  opacity: 1;
+  transform: translateX(0);
+} */
+.text {
+  display: flex;
+  align-items: center;
+}
+.todo-item button,
+.todo-item a {
+  background: transparent;
+  opacity: 0.6;
+  border-color: transparent;
+  padding: 0.2rem 0.3rem;
+  cursor: pointer;
+  color: var(--text-color);
+  font-family: "Josefin Sans";
+}
+
+.todo-item h4 {
+  margin-bottom: 0;
+}
+.check-label span {
+  margin: 0 0.8rem;
+}
+.check-label {
+  margin-right: 0.8rem;
+}
+.todo-item .check-label {
+  margin-bottom: 0;
+  padding-left: 1rem;
+  cursor: pointer;
+}
+.todo-item.flex p {
+  cursor: auto;
+}
+
+/* bottom nav links */
+.flex a {
+  text-decoration: none;
+  font-weight: bold;
+}
+.flex .links a.active {
+  color: hsl(220, 98%, 61%);
+  opacity: 1 !important;
+}
+.links a {
+  color: var(--link-color);
+}
+.info {
+  margin: 5rem auto;
+  color: var(--text-color);
+}
+@media (max-width: 350px) {
+  .todo-item.flex .links {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 500px) {
+  .todo-item.flex .links {
+    position: absolute;
+    bottom: -4rem;
+    right: 0;
+    left: 0;
+    background: var(--white-color);
+    padding: 0.7rem;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+  }
+  .add-todo.reset {
+    bottom: -8rem;
+  }
+  .todo-item.flex .links * {
+    margin: 0.5rem;
+  }
+  .bg-image {
+    width: 180vw;
+    overflow: hidden;
+    left: -25vw;
+  }
+  .info {
+    margin: 10rem auto;
+  }
+  .todo-item {
+    padding: 1rem;
+  }
+  .left {
+    width: 40%;
+  }
+  .todo-item .check-label {
+    padding-left: 0.6rem;
+  }
+  .dueTag {
+    font-size: 0.6rem;
+  }
+}
+@media (max-width: 360px) {
+  body {
+    font-size: 15px;
+  }
+  .todo-item.flex {
+    padding: 0.6rem 0.4rem;
+  }
+  .dueTag {
+    font-size: 0.6rem;
+  }
+  .text {
+    font-size: 0.8rem;
+  }
+  .checkbox > input {
+    width: 14px;
+    height: 14px;
+  }
+}
+.trash {
+  color: var(--text-color);
+  background: transparent;
+  padding: 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  /* border: 2px solid var(--text-color); */
+}
+.trash svg {
+  fill: var(--text-color);
+}
